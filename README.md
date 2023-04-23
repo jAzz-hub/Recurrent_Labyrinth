@@ -28,10 +28,13 @@
 
 <br><br>
 ## Introdução
-Este repositório apresenta a solução implementada para um desafio da disciplina de Algoritmos e Estruturas de Dados. Há com isso o propósito de testar a implementação de um algoritmo guloso que faça pesquisa em uma matriz. Para melhor entendimento deste trabalho, considere as sentenças à seguir:
-- $K$ - Número de matrizes de entrada.
+Este repositório apresenta a solução implementada para um desafio da disciplina de Algoritmos e Estruturas de Dados. Assim como foi realizado no primeiro trabalho da disciplina (Greedy Algorithm) esta é uma proposta de implementar um algoritmo que resolva um problema de forma gulosa, contudo um problema diferente da primeira proposta. Para isso considere as seguintes colocações:
 
-- $N$ - Ordem de uma matriz tal que $N \in \mathbb{Z}$ e $N\geq 0$.
+- Nomes de diretórios, ou arquivos serão referênciados da seguinte forma: `Nome.txt` ou `Diretório_2`.
+
+- $K$ - Número de matrizes de entrada presentes no arquivo `input.data`.
+
+- $N$ - Ordem das matrizes sendo representada pelos 2 primeiros números da primeira linha do arquivo `input.data`, portanto o código já espera que $N \in \mathbb{Z}$ e $N\geq 0$ e não trata essa variável.
 
 - $i$ - Índice de uma linha que pertence à uma matriz específica, também pode ser abstraído como deslocamento na vertical, tal que $i \geq 0$ e $i \in \mathbb{Z}$.
 
@@ -39,48 +42,124 @@ Este repositório apresenta a solução implementada para um desafio da discipli
 
 - $a_{ij}$ - Elemento encontrado quando há deslocamento até a linha de índice $i$ e coluna de índice $j$.
 
-- Nomes de diretórios, ou arquivos serão referênciados da seguinte forma: `Nome.txt` ou `Diretório_2`.
+- $\text{\#}$ - **Parede**: Local onde não se pode passar dentro de uma matriz.
+
+- $*$ - **Perigo**: Local onde ao se passar haverá descrescimento em 1 da variável vida.
+
+- $a_{ij}$ - Elemento encontrado quando há deslocamento até a linha de índice $i$ e coluna de índice $j$.
+
+-   $A$ - Caso favorável.
+
+-   $n(A)$ - Número de casos favoráveis.
+
+-   $n(U)$ - Número de casos possíveis.
+
+-   $P(A)$ - Probabilidade de um caso favorável $A$.
 
 - Nomes de comandos digitados no terminal,funções ou variáveis serão referênciados da seguinte forma: _**touch main.cpp**_, _**make run**_, __**ShowResults()**__, __**variableA**__.
 
-- Para as **Figuras** de **1** à **10**, considere a legenda de cores:
+- Para as **Figuras** de **1** à **x**, considere a legenda de cores:
+
+
 
     -   Azul:Uma posição futura possível.</kbd>
     -   Cinza: Uma posição futura impossível.
     -   Laranja: Posição atual ou inicial.
     -   Rosa: Posição futura escolhida.
+
+### Contextualizando o Algoritmo
+- Para contextualizar o funcionamento do algoritmo aqui foram escolhida Considere a existencia de um personagem muito ambicioso este viaja através de labirintos em busca de itens. Sua ambição é tamanha que viajará até coletar o máximo de itens escondidos pelo caminho possível. Para isso o ambicioso caminha sem parar até que uma das proposições à seguir sejam verdades.:
+    -   O personagem inicia sua viajem com $10$ pontos de vida.
+    -   O caracter $\text{\#}$ representa uma casa por onde o ambicioso não consegue passar. Denomina-se o $\text{\#}$ como parede neste projeto.
+    -   O caracter $*$ representa uma casa por onde caso o ambicioso passe, haverá descrescimento de um ponto de vida do mesmo. Denomina-se o $*$ como perigo.
+    -   O personagem morre de pânico ao realizar uma viajem partindo de um ponto $a_{ij}$ e retornando ao mesmo com $a_{ij}$, sem que haja encontrado nenhum item em seu percurso sendo $a_{ij}$ uma casa de valor 0 quando considerada o primeiro passo do circuito.
+    -   Cada casa tem um item de valor específico.
+    -   Quando o jogador anda por 4 casas com itens de valor diferente de $0$ ele recebe $1$ ponto de vida.
+    -   O personagem morre ao enfrentar o número de perigos que o leve a ter pontos de vida igual a $0$.
+
+-   *Alternativa de abordagem:* Percursos ou circuitos podem representar conceitos mais completos ao se tratar de relações entre abstrações com informações. Os Grafos são a trativa adequada para resolver esse tipo de problema, definidos como estruturas formadas por objetos que apresentam uma relação comum, abrangem muitos problemas. Caso haja interesse em modelar os conceitos contextualizados nessas estruturas, é valida à consulta dos seguintes links: <a href = " " >Aula em português</a> , <a href = " " >Leitura</a> e <a href="https://graphonline.ru/pt/">Modelagem e experimentação</a>;
+
+
+######  *Nota de leitura*: À partir daqui considere a tratativa do termo labirinto como o termo matriz, bem como as casas como elementos pertencentes à mesma, e a viajem realizada sendo representada através da leitura e escrita do arquivo `input.data`.
+
+
 <br><br>
-## Objetivo
+## Objetivo Específicos
 A problemática proposta incita os alunos da disciplina a desenvolverem um programa que leia $K$ matrizes de ordem $N$. Considerando essa proposição algumas exigências de desenvolvimento solicitadas foram:
 
-- As matrizes deverão estar préviamente organizadas para processamento.
-- A pesquisa ou percorrimento na matriz iniciará à partir da entrada de dados do usuário ou de um arquivo. Esta entrada é o ponto de onde caminhada ou pesquisa pela matriz se inicia.
+- As matrizes deverão estar préviamente organizadas para processamento em um arquivo `input.data`.
+
+- A pesquisa ou percorrimento na matriz iniciará preferencialmente à partir de um arquivo e quando necessário deve-se gerar dados de entrada automáticos. A entrada representará tanto o ponto inicial  para percorrer as matrizes, quento os valores de ${K}$ e ${N}$.
 
 - Os movimentos válidos para deslocamento pela matriz são listados à seguir e visualizados de azul na Figura 1, considerando o ponto de partida atual sendo o elemento colorido de laranja:
     
+
+    - Retroceder para a coluna anterior.
+    
     - Avançar para a próxima coluna.
+
+    - Retroceder para a linha anterior.
     
-    - Retroceder a coluna anterior.
-    
-    - Avançar para a linha de baixo.
+    - Avançar para a próxima linha.
     
     - Avançar em diagonal esquerda, ou direita para baixo.
 
+    - Avançar em diagonal esquerda, ou direita para cima.
+
+    - Avançar em diagonal direita, ou direita para baixo.
+
+    - Avançar em diagonal direita, ou direita para cima.
+
+- A coluna de valor $N$ faz com que o personagem troque da matriz em que ele está para a matriz próxima matriz do arquivo.
+
 <div align="center">
-<strong>Figura 1</strong> - Movimentos possíveis    
+<strong>Figura 1</strong> - Escolha de inicialização    
 <br>
 <img src="./img/Imagem1.png" width="35%">
 <br>
 Fonte: Construção pelo autor¹.
 <br>
 ____________________________________________
-<br>¹Criada usando o Google Sheets, Disponível em <a href="https://docs.google.com/spreadsheets/d/1nbK5ybx7Lwp98y11IScqkPUhSizV1jwG1KyGsdvTEjI/edit?usp=sharing">Planilha</a>.
+<br>¹Criada usando o Google Sheets, Disponível em <a href="https://docs.google.com/spreadsheets/d/1nbK5ybx7Lwp98y11IScqkPUhSizV1jwG1KyGsdvTEjI/edit#gid=0">Planilha</a>.
 </div>
 <br>
 
-- Os movimentos devem ser realizados em direção às casas adjascentes de maior valor possível. No caso da Figura 1 essa opção representa o elemento em $i=1$ e $j=4$, portanto o próximo movimento se desloca até $a_{14}$.
-- Caso haja um valor em comum entre as direções de maior valor, é  necessário que uma regra de caminhamento seja estabelecida. E que esta enquanto padrão seja a melhor decisão de caminhamento.
-- Ao ter como posição atual o elemento de uma matriz posicionado na última linha e coluna simultâneamente, ou seja o elemento na coordenada de maior valor referente a $i$ e $j$, tais que, $i,j \in \mathbb{Z}$ onde $  0 \leq i\leq N$ e $0 \leq j \leq N$, considera-se que a matriz foi percorrida até o final com isso o programa recebe uma nova entrada referênte ao ponto inicial de caminhada para a próxima matriz. Caso o programa tenha lido a última matriz, isso não acontece.
+- Cada desenvolvedor do projeto escolhe propostas de inicialização e percorrimento diferentes, em função disso as seguintes premissas se fazem necessárias para compreensão da escolhida neste projeto.
+
+- O ponto inicial deve ser escolhido de maneira aleatória, seguindo uma probabilidade de escolha distribuída entre as casas azuis.
+
+-   Em primeiro lugar para cálculo da probabilidade de escolha de um caso descobre-se o valor da divisão entre a escolha de um caso favorável e os casos possíveis. Isso pode ser representado das seguinte maneira:
+    -   $P(A) = \frac{n(A)}{n(U)}$
+
+- No caso da Figura 1, sendo A uma escolha de que a casa inicial seja $i=2$ e $j = 2$, as seguintes proposições são verdadeiras:
+    - Casas onde $j=N$ não são posições válidas de inicialização.
+    - Casas com o caracter de valor $\#$ não são escolhas possíveis.
+    - Existem $5$ caracteres de valor $\#$ na matriz analizada.
+    - $n(U) = 15$
+    - $n(A) = 1$.
+    - $P(A) \approx 6,6666\%$
+
+
+<div align="center">
+<strong>Figura 2</strong> - Escolha de caminhamento    
+<br>
+<img src="./img/Imagem2.png" width="35%">
+<br>
+Fonte: Construção pelo autor¹.
+<br>
+____________________________________________
+<br>¹Criada usando o Google Sheets, Disponível em <a href="https://docs.google.com/spreadsheets/d/1nbK5ybx7Lwp98y11IScqkPUhSizV1jwG1KyGsdvTEjI/edit#gid=0">Planilha</a>.
+</div>
+<br>
+
+
+- Os movimentos devem ser realizados de maneira aleatória, seguindo uma probabilidade de escolha distribuída entre as casas azuis. Com isso seriam elementos possível para deslocamento os elementos contidos no conjunto $F$ para $F =  \text \{ a_{11}, a_{12}, a_{13}, a_{23}, a_{33}, a_{32}, a_{31}, a_{21} \}$. Portanto: 
+    - $P(a_{ij}) \approx 12,5\%$ tal que $a_{ij} \in F$
+
+
+- Ao ter como posição atual o elemento de uma matriz posicionado na última coluna, ou seja, com $j = N$ o personagem troca para a próxima matriz.
+
+
 <br><br>
 <!--Prioridade alta-->
 ## Solução
@@ -90,19 +169,26 @@ Os arquivos para funcionamento do projeto são:
 <div align="center">
 <strong>Figura 2</strong> - input.data    
 <br>
-<img src="./img/Imagem2.png" width="35%">
+<img src="./img/Imagem3.png" width="35%">
 <br>
 Fonte: Captura de tel feita pelo autor².
 <br>
 ____________________________________________
-<br>²Captura de tela do computador do autor. Disponível em: <a href="https://github.com/jAzz-hub/Greedy_Algorithm/blob/main/img/Imagem2.png">Imagem 2</a>.
+<br>²Captura de tela do computador do autor. Disponível em: <a href="https://github.com/jAzz-hub/Recurrent_Labyrinth/blob/main/img/Imagem3.png">Imagem 3</a>.
 </div>
 <br>
 
 
 - `Makefile` : Controla a geração dos executáveis e compilação dos mesmos(FREE SOFTWARE FOUNDATION, GNU make, 2023).
-- `functions.cpp` : Contém as funções criadas para execução no `main.cpp`.
-- `structures.hpp` : Contém as estruturas e chamadas de bibliotecas utilizadas no programa.
+
+- `ReadFunctions.cpp` : Conteḿ as funções criadas para leitura da primeira linha do arquivo `input.data`.
+
+- `ReadSignature.hpp` : Conteḿ as assinaturas das funções criadas para leitura da primeira linha do arquivo `input.data`.
+
+- `functions.cpp` : Contém as funções criadas para execução no `main.cpp` e no próprio `functions.cpp`.
+
+- `structures.hpp` : Contém as estruturas e chamadas de bibliotecas utilizadas e assinaturas das funções do programa.
+
 - `main.cpp` : Contém uma série de funções e declaração de variáveis que façam com que a busca pela matriz seja realizada devidamente.
 <br><br>
 ### Funcionamento
