@@ -167,7 +167,7 @@ ____________________________________________
 Os arquivos para funcionamento do projeto são:
 - `input.data` : Um arquivo que armazena na sua primeira linha a ordem das matrizes que estão dispostas nas linhas subsequentes.
 <div align="center">
-<strong>Figura 2</strong> - input.data    
+<strong>Figura 3</strong> - input.data    
 <br>
 <img src="./img/Imagem3.png" width="35%">
 <br>
@@ -193,21 +193,22 @@ ____________________________________________
 <br><br>
 ### Funcionamento
 #### 1. Primeira Leitura do Arquivo
- A leitura das entradas do arquivo `input.data` são realizadas em 2 etapas, na primeira etapa é executada a função _**SizeRecon**_.
+ A leitura das entradas do arquivo `input.data` é realizada apenas 1 vez, em primeiro lugar o código reconhece qual a ordem da matriz e quantas matrizes estarão presentes no arquivo de entrada, isso será realizado respectivamente pelas funções _**SizeRecon**_ e _**HowMuchMatrixes**_.
 
- A função SizeRecon é responsável por ler a primeira linha do arquivo de entrada e retornar à alguma variável o valor de $N$, este valor serve para todas as $K$ matrizes contidas no arquivo `input.data`.
+ A função SizeRecon é responsável por ler a primeira linha do arquivo de entrada e retornar $N$, este valor serve para todas as $K$ matrizes contidas no arquivo `input.data`.
 
-#### 2. Segunda Leitura do Arquivo.
-Com $N$ armazenada na variável _**size**_ o código, uma estrutura de tamanho $N$ do tipo _**MatrixElement**_ denominada _**FinalMatrix**_ é criada para que os valores do arquivo `input.data` sejam alocados em uma variável. A estrutura do tipo _**MatrixElement**_ nesse caso será uma matriz com variávies do tipo unsigned short int como elementos $a_{ij}$.
+#### 2. Armazenando dados do Arquivo.
+ Com os valores de $N$ e $K$ sendo fornecidos pelas funções como foi colocado, uma estrutura de tamanho $N$ do tipo _**Matrix**_ denominada _**MatrixLabyrinth**_ é criada para que os valores do arquivo `input.data` ou `Output.data` sejam alocados em uma variável conforme as leituras e escritas ocorram de forma recorrente. A estrutura do tipo _**Matrix**_ possui atributos importantes mas o principal para continuar nosso entendimento a cerca do código é um vetor alocado dinâmicamente chamado _***Labyrinth**_, ou seja, a matriz que armazena os valores $a_{ij}$ contidos no arquivo.
 
-Para a leitura das $K$ matrizes um laço percorre o arquivo armazenando cada elemento identificado em uma posição da estrutura _**FinalMatrix**_, essa mesma estrutura é reiniciada assim que: _**MatrixLines**_  =  $N-1$ . Considerando que _**MatrixLines**_ é uma variável criada para armazenar o número de linhas preenchidas com entradas do arquivo.
+Para a leitura das $K$ matrizes um laço percorre o arquivo armazenando cada elemento identificado em uma posição da estrutura _**Labyrinth**_, essa mesma estrutura é reiniciada assim que: _**MatrixLines**_  =  $N-1$ . Considerando que _**MatrixLines**_ é uma variável criada para armazenar o número de linhas preenchidas com entradas do arquivo.
 
 
  
-#### 3. Percorrendo a Matriz:
+#### 3. Percorrendo Matrizes:
+
 
 #### 3.1. Localização inicial
-Diante do que foi narrado, o programa recebe do usuário as coordenadas de $i$ e $j$ para inicializar a pesquisa através da martriz partindo do elemento $a_{ij}$. A entrada de i e j é requisitada através de _**CoordinateDefinition**_.
+Diante do que foi narrado, o programa gera coordenadas de $i$ e $j$ aleatoriamente para inicializar a pesquisa através da martriz partindo do elemento $a_{ij}$. A função _**Spawn**_ gera aleatoriamente os valores de $i$ e $j$ para dar início ao percorrimento da matriz.
 
 
 #### 3.2. Direções possíveis
@@ -216,31 +217,12 @@ O programa usa $a_{ij}$ como posição em que está no presente, ele verifica a 
 
 A validação citada ocorre através do seguinte modo:
 
-- Criação de hipóteses dentro de variáveis booleanas,sendo o resultádo dessas variáveis é dependente da posição atual.As variáveis booleanas criadas tem os nomes de pontos cardeais em inglês, são elas _**W**_,_**SW**_,_**S**_,_**SE**_,_**E**_ e podem ser verdadeiras ou falsas de maneiras diferentes tornando diversos caminhos possíveis. 
+- Criação de hipóteses dentro de variáveis booleanas,sendo o resultado dessas variáveis é dependente da posição atual.As variáveis booleanas criadas tem os nomes de pontos cardeais em inglês, são elas _**N**_,_**NE**_,_**NW**_,_**W**_,_**SW**_,_**S**_,_**SE**_,_**E**_ e podem ser verdadeiras ou falsas de maneiras diferentes tornando diversos caminhos possíveis. 
 
 Por fim pode-se abstrair a situação acima nas seguintes ilustrações, considerando que o elemento de cor laranja é o local atual:
 
 <div align="center">
-<strong>Figura 3</strong> - 5 possíveis caminhos    
-<br>
-<img src="./img/Imagem3.png" width="35%">
-<br>
-Fonte: Construção pelo autor³.
-<br>
-____________________________________________
-<br>³Criada usando o Google Sheets, Disponível em <a href="https://docs.google.com/spreadsheets/d/1nbK5ybx7Lwp98y11IScqkPUhSizV1jwG1KyGsdvTEjI/edit?usp=sharing">Planilha</a>.
-</div>
-<br>
-
-#### 3.3. A melhor direção local:
-Após analisar as hipóteses, a decisão de qual é o melhor caminho a seguir é feita considerando o $a_{ij}$ de maior valor, enquanto esta posição de maior valor seja diferente da última posição. Isso significa que em nenhum momento o próximo passo pode se o passo anterior, afinal isso faria com que duas casas próximas com o maior valor possível fossem as únicas escolhidas.
-
-Para buscar a maior direção válida, o programa decide quais são os pontos cardeais válidos, à depender disso ele executa uma das seguintes funções possíveis:
-
-- _**FivePossibleWays**_: Verifica qual o maior dentre 5 elementos, tendo uma posição de coordenadas $i$ e $j$ diferentes da posição passada. Exemplo na **Figura 4**.
-
-<div align="center">
-<strong>Figura 4</strong> - Maior valor entre 5
+<strong>Figura 4</strong> - 8 possíveis caminhos    
 <br>
 <img src="./img/Imagem4.png" width="35%">
 <br>
@@ -251,10 +233,15 @@ ____________________________________________
 </div>
 <br>
 
-- _**SouthEastPossibleWays**_: Verifica qual o maior dentre 3 elementos, tendo uma posição de coordenadas $i$ e $j$ diferentes da posição passada. Estes elementos estão ao Sul, Leste ou Sudeste do $a_{ij}$ atual. Exemplo na **Figura 5**.
+#### 3.3. Escolha entre Direções Locais:
+Após analisar as hipóteses, a decisão de qual caminho seguir é realizada através da escolha de coordenadas possíves, sendo elas definidas pela função _**CoordinateDefinition**_. Uma vez que o personagem escolhe uma nova coordenada, seus atributos são alterados pela função _**PlayerAndLabyrinthUpdate**_.
+
+- _**CoordinateDefinition**_: Escolhe uma casa adjascente aleatória para caminhamento. Essa escolha é realizada de forma repetida até que o valor da coordenada escolhida esteja alocada pela matriz e seja diferente de uma parede.
+
+- _**PlayerAndLabyrinthUpdate**_: Adiciona passos ao contador de passos, contabiliza itens na inventário para aumento de pontos de vida, descrementa pontos de vida ao enfrentar um perigo e atualiza atributos da Rotunda.
 
 <div align="center">
-<strong>Figura 5</strong> - 3 possíveis caminhos para Sul e Leste.     
+<strong>Figura 5</strong> - Validando as coordenadas válidas para deslocamento, sendo elas  Noroeste, Norte e Nordeste
 <br>
 <img src="./img/Imagem5.png" width="35%">
 <br>
@@ -265,33 +252,38 @@ ____________________________________________
 </div>
 <br>
 
-- _**SouthWestPossibleWays**_: Verifica qual o maior dentre 3 elementos, tendo uma posição de coordenadas $i$ e $j$ diferentes da posição passada. Estes elementos estão ao Sul, Oeste ou Sudoeste do $a_{ij}$ atual. Exemplo na **Figura 6**.
+#### 3.4. Trocando de Matriz
+No momento em que o personagem alcança a última coluna da matriz local a função _**FileUpdate**_ escreve as alterações da matriz local durante a caminhada em um arquivo `Output.data` e o personagem começa a realizar o percorrimento da próxima matriz.
+
+- Quando o jogador alcança a última coluna da última matriz presente em no arquivo `input.data`, a função _**FileUpdate**_ passa a realizar a leitura e escrita dentro do arquivo `Output.data`.
+
+#### 3.5. Casos Especiais
+Existem alguns casos particulares onde teremos uma derrota causada por motivos diversos:
+
+- Quando o jogador inicia uma trajetória que em algum momento passa pelo mesmo ponto onde ela começou sendo que este não capturou nenhum item, o jogo é perdido. Para computar essa derrota foram criadas as funções e estruturas de dados à seguir:
+
+ - _**Roundabout**_: Roundabout ou Rotunda é um item no inventário do jogador, esse vetor passa a armazenar as coordenadas percorridas por um jogador à partir do momento que ele passa a viajar por casas de valor $0$, o item armazena uma coordenada por matriz e é esvaziado caso o jogador pegue um item tendo de ser preenchido de novo. Isso foi modelado de maneira ilustrativa por um vetor, este vetor tem como tamanho o número de matrizes contidas no arquivo `input.data`;
+
+ - _**UpdatingPlayerRoundabout**_: Função que atualiza os valores na Rotunda, preenchendo-a caso o jogador pegue um zero em uma matriz onde ele não pegou esse valor ainda, ou esvaziando-a caso o jogador pegue um item. Caso a rotunda esteja completamente preenchida o atributo _**WinCondition**_ do jogador se torna falso e ele é morto pela função _**GameOver**_.
+
+ - _**MatrixNotOnRoundabout**_: Função que verifica se as coordenadas da matriz atual já foram armazenadas na rotunda, ou seja, se o jogador já pegou $0$ na matriz atual ou não.
+
+ - _**RestartRoundabout**_: Função que esvazia a rotunda quando o jogador pega um item.
+
+ - Ao se considerar um caso com $K = 2$ com $N = 5$, onde em algum momento o trajeto sinalizado é realizado, tendo o ponto inicial na primeira matriz como $a_{20}$ e o ponto final como $a_{20}$ na primeira matriz, pode-se conceber um caso onde o jogador morre por preenchimento da rotrunda. Acompanhe o exemplo na imagem à seguir
+
+
+
 <div align="center">
-<strong>Figura 6</strong> - 3 possíveis caminhos para Sul e Oeste.    
+
+<strong>Figura 6</strong> - Casa inicial ou presente é igual casa final.    
 <br>
-<img src="./img/Imagem6.png" width="35%">
+<img src="./img/Imagem6.png" width="40%">
 <br>
 Fonte: Construção pelo autor⁶.
 <br>
 ____________________________________________
 <br>⁶Criada usando o Google Sheets, Disponível em <a href="https://docs.google.com/spreadsheets/d/1nbK5ybx7Lwp98y11IScqkPUhSizV1jwG1KyGsdvTEjI/edit?usp=sharing">Planilha</a>.
-</div>
-<br>
-
-#### 3.4. Casos Especiais
-Existem alguns casos particulares onde teremos os seguintes movimentos:
-
-- Quando a posição atual como $a_{ij}$ tem seus valores de $i = N-1$ e $j =N-1 $, ou seja, quando a posição atual for a última posição.Nesse caso a pesquisa na matriz é finalizada.
-<div align="center">
-
-<strong>Figura 7</strong> - Casa inicial ou presente é igual casa final.    
-<br>
-<img src="./img/Imagem7.png" width="35%">
-<br>
-Fonte: Construção pelo autor⁷.
-<br>
-____________________________________________
-<br>⁷Criada usando o Google Sheets, Disponível em <a href="https://docs.google.com/spreadsheets/d/1nbK5ybx7Lwp98y11IScqkPUhSizV1jwG1KyGsdvTEjI/edit?usp=sharing">Planilha</a>.
 </div>
 <br>
 

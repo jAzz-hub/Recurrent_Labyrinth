@@ -4,7 +4,7 @@
 
 using namespace std;
 
-/// @brief Lê a primeira linha do arquivo input.data e retorna uma variável que representa o tamanho das matrizes contidas nesse arquivo
+/// @brief Lê a primeira linha do arquivo input.data
 /// @return O tamanho das matrizes à serem lidas
 unsigned short int SizeRecon()
 {
@@ -16,6 +16,8 @@ unsigned short int SizeRecon()
     return (ArrayArea+1);
 }
 
+/// @brief Lê a primeira linha do arquivo input.data
+/// @return  O número de matrizes a serem lidas nesse arquivo
 unsigned int HowMuchMatrixes()
 {
     int size;
