@@ -145,10 +145,10 @@ ____________________________________________
 <br>
 <img src="./img/Imagem2.png" width="35%">
 <br>
-Fonte: Construção pelo autor¹.
+Fonte: Construção pelo autor².
 <br>
 ____________________________________________
-<br>¹Criada usando o Google Sheets, Disponível em <a href="https://docs.google.com/spreadsheets/d/1nbK5ybx7Lwp98y11IScqkPUhSizV1jwG1KyGsdvTEjI/edit#gid=0">Planilha</a>.
+<br>²Criada usando o Google Sheets, Disponível em <a href="https://docs.google.com/spreadsheets/d/1nbK5ybx7Lwp98y11IScqkPUhSizV1jwG1KyGsdvTEjI/edit#gid=0">Planilha</a>.
 </div>
 <br>
 
@@ -171,10 +171,10 @@ Os arquivos para funcionamento do projeto são:
 <br>
 <img src="./img/Imagem3.png" width="35%">
 <br>
-Fonte: Captura de tel feita pelo autor².
+Fonte: Captura de tel feita pelo autor³.
 <br>
 ____________________________________________
-<br>²Captura de tela do computador do autor. Disponível em: <a href="https://github.com/jAzz-hub/Recurrent_Labyrinth/blob/main/img/Imagem3.png">Imagem 3</a>.
+<br>³Captura de tela do computador do autor. Disponível em: <a href="https://github.com/jAzz-hub/Recurrent_Labyrinth/blob/main/img/Imagem3.png">Imagem 3</a>.
 </div>
 <br>
 
