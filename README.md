@@ -115,7 +115,7 @@ A problemática proposta incita os alunos da disciplina a desenvolverem um progr
 <div align="center">
 <strong>Figura 1</strong> - Escolha de inicialização    
 <br>
-<img src="./img/Imagem1.png" width="35%">
+<img src="./img/Imagem 1.png" width="35%">
 <br>
 Fonte: Construção pelo autor¹.
 <br>
@@ -153,7 +153,7 @@ ____________________________________________
 <br>
 
 
-- Os movimentos devem ser realizados de maneira aleatória, seguindo uma probabilidade de escolha distribuída entre as casas azuis. Com isso seriam elementos possível para deslocamento os elementos contidos no conjunto $F$ para $F =  \text \{$ $a_{11}, a_{12}, a_{13}, a_{23}, a_{33}, a_{32}, a_{31}, a_{21}$ $\text \}$. Portanto: 
+- Os movimentos devem ser realizados de maneira aleatória, seguindo uma probabilidade de escolha distribuída entre as casas azuis. Com isso seriam elementos possível para deslocamento os elementos contidos no conjunto $F$ para $F = $ { $a_{11}, a_{12}, a_{13}, a_{23}, a_{33}, a_{32}, a_{31}, a_{21}$ $ }. Portanto: 
     - $P(a_{ij}) \approx 12,5\%$ tal que $a_{ij} \in F$
 
 
