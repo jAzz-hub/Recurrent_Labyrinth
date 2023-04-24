@@ -30,16 +30,6 @@ bool VerifyPositionGenerated(Coordinate NowPosition, Coordinate NewPosition)
 Coordinate CoordinateDefinition(unsigned short int size, Coordinate NowPosition,bool N,bool NW,bool W,bool SW, bool S , bool E, bool SE, bool NE)
 {
     Coordinate Position;
-    
-    // cout<<"N:"<<N<<" ";
-    // cout<<"NW:"<<N<<" ";
-    // cout<<"W:"<<W<<" ";
-    // cout<<"SW:"<<SW<<" ";
-    // cout<<"S:"<<S<<" ";
-    // cout<<"E:"<<E<<" ";
-    // cout<<"SE:"<<SE<<" ";
-    // cout<<"NE:"<<NE<<" ";
-        
 
     //Criar um vetor com todas as casa adjascentes possíveis de caminhamento
     string PossibleCoordinatesStr[8] = {"N"," NW", "W", "SW", "S", "E", "SE", "NE"};
@@ -57,13 +47,11 @@ Coordinate CoordinateDefinition(unsigned short int size, Coordinate NowPosition,
         {
 
             TrueCases[TrueCasesCounter] = i;
-            cout<<PossibleCoordinatesStr[i]<<"\t";
             TrueCasesCounter+=1;
         }
         else
             FalseCasesCounter+=1;
 
-        //cout<<PossibleCoordinatesStr[i]<<"@"<<PossibleCoordinatesBool[i]<<"\n";
     }
 
     //Criar um acesso aleatório de índice
@@ -77,67 +65,53 @@ Coordinate CoordinateDefinition(unsigned short int size, Coordinate NowPosition,
     else
     {        
         unsigned short int Key = RandomGenerator(0,TrueCasesCounter-1);
-        // cout<<Key;
+
         unsigned short int NextStepCoordinateIndex = TrueCases[Key];
 
         if(NextStepCoordinateIndex == 0)
         {
-            // cout<<"Caminhei para -> \t"<<PossibleCoordinatesStr[NextStepCoordinateIndex];
             Position.i = NowPosition.i-1;
             Position.j = NowPosition.j;
         }
         else if(NextStepCoordinateIndex == 1)
         {
-            // cout<<"Caminhei para -> \t"<<PossibleCoordinatesStr[NextStepCoordinateIndex];
             Position.i = NowPosition.i-1;
             Position.j = NowPosition.j-1;    
         }
         else if(NextStepCoordinateIndex == 2)
         {
-            // cout<<"Caminhei para -> \t"<<PossibleCoordinatesStr[NextStepCoordinateIndex];
             Position.i = NowPosition.i;
             Position.j = NowPosition.j-1;
         }
         else if(NextStepCoordinateIndex == 3)
         {
-            // cout<<"Caminhei para -> \t"<<PossibleCoordinatesStr[NextStepCoordinateIndex];
             Position.i = NowPosition.i+1;
             Position.j = NowPosition.j-1;
         }
         else if(NextStepCoordinateIndex == 4)
         {
-            // cout<<"Caminhei para -> \t"<<PossibleCoordinatesStr[NextStepCoordinateIndex];
             Position.i = NowPosition.i+1;
             Position.j = NowPosition.j;
         }
         else if(NextStepCoordinateIndex == 5)
         {
-            // cout<<"Caminhei para -> \t"<<PossibleCoordinatesStr[NextStepCoordinateIndex];
             Position.i = NowPosition.i;
             Position.j = NowPosition.j+1;    
         }
         else if(NextStepCoordinateIndex == 6)
         {
-            // cout<<"Caminhei para -> \t"<<PossibleCoordinatesStr[NextStepCoordinateIndex];
             Position.i = NowPosition.i+1;
             Position.j = NowPosition.j+1;
         }
         else if(NextStepCoordinateIndex == 7)
         {
-            // cout<<"Caminhei para -> \t"<<PossibleCoordinatesStr[NextStepCoordinateIndex];
             Position.i = NowPosition.i-1;
             Position.j = NowPosition.j+1;
         }
 
         else
         {
-            cout<<"ESTOU PARADO E VOU MORRER!\n"<<NextStepCoordinateIndex<<"\n&&&\n\t\n\t";
-            cout<<NextStepCoordinateIndex<<"\t"<<Key<<"\t"<<"\n";
-            for(int i = 0;i<TrueCasesCounter;i++)
-            {
-                cout<<"\n";
-                cout<<TrueCases[i]<<"$";
-            }
+            cout<<"...";
         }
 
         // //TO DO:
@@ -173,9 +147,6 @@ Coordinate Spawn(unsigned short int size, Matrix MatrixLabyrinth)
         }
     
     }
-    cout<<"POSITION ===>"<<Position.i<<Position.j<<"(("<<((MatrixLabyrinth.Labyrinth[MatrixLabyrinth.n * Position.i + Position.j].Region == -2) || (Position.j==(size-1)))<<"))";
-    cout<<"ELEMENTO:"<<MatrixLabyrinth.Labyrinth[MatrixLabyrinth.n * Position.i + Position.j].Region;
-
     return Position;
 }
 
@@ -223,22 +194,6 @@ void CreatingCoordinates(unsigned short int size,unsigned short int i,unsigned s
     *NW = ( ( DiagonallyLeftUp ) && !(MyLabyrinth->Labyrinth[MyLabyrinth->n * (i-1) + (j-1)].Region==(-2)));
     
 }
-
-
-// * * 16 
-// * # 12 
-// * 48 # 
-
-// 12 * # 
-// * * 1 
-// 22 1 # 
-
-//Não pegar o item no lugar que spwnar.
-//Nunca Spawnar em parede (' # ').
-//Nunca Spawnar no teleporte.
-//
-
-
 
 void DangerAlert(PlayerStatus *player)
 {
@@ -309,7 +264,6 @@ void UpdatingPlayerRoundabout(PlayerStatus *player, Coordinate ActuallyPlace, un
         player->Roundabout[player->MatrixOfTheMomment-1].MatrixOfPosition = player->MatrixOfTheMomment;
 
         player->DefeatCombo+=1;
-        cout<<"Combo da derrota está em:"<<player->DefeatCombo;
     }
 
     //Se a matriz que você se encontra é igual a primeira matriz onde capturou zeros:
@@ -330,7 +284,6 @@ void UpdatingPlayerRoundabout(PlayerStatus *player, Coordinate ActuallyPlace, un
     {
         RestartRoundabout(*&player->Roundabout);
         player->TookA0Yet = false;
-        cout<<"AQUI O VETOR SERIA COMPLETAMENTE APAGADO!!";
         player->DefeatCombo = 0;
     }
 
@@ -343,7 +296,6 @@ void UpdatingPlayerRoundabout(PlayerStatus *player, Coordinate ActuallyPlace, un
 
 void PlayerAndLabyrinthUpdate(PlayerStatus *player, Coordinate ActuallyPlace, Matrix *MatrixStructure, unsigned short int NowMatrix)
 {
-    // (MatrixStructure->Labyrinth[MatrixStructure->n * ((ActuallyPlace.i)) + ((ActuallyPlace.j))].Region);
     short int PositionValue = (MatrixStructure->Labyrinth[MatrixStructure->n * ((ActuallyPlace.i)) + ((ActuallyPlace.j))].Region);
 
     player->Steps+=1;
@@ -363,11 +315,6 @@ void PlayerAndLabyrinthUpdate(PlayerStatus *player, Coordinate ActuallyPlace, Ma
     {
         BagAlert(&*player, ActuallyPlace, &*MatrixStructure, PositionValue);
     }
-
-    else
-    {
-       cout<<"PAREDE!!";
-    }
 }
 
 void MatrixScanning(Matrix *MatrixLabyrinth)
@@ -383,8 +330,9 @@ void MatrixScanning(Matrix *MatrixLabyrinth)
 void ResumeOfJourney(PlayerStatus Player, short int Cycles)
 {
     cout<<"========================Resumo da Trilha=================================\n";
-    cout<<"\n -> Itens pegos: "<<Player.ItemsGrasped<<"Itens. \n";
-    cout<<"\n -> Total de casas exploradas: "<<Player.KnownCoordinates<<"\n";
+    cout<<"\n -> Itens pegos: "<<Player.ItemsGrasped<<" itens. \n";
+    cout<<"\n -> Total de casas exploradas: "<<"Não concluído"<<"\n";
+    cout<<"\n -> Total de casas inexploradas: "<<"Não concluído"<<"\n";
     cout<<"\n -> Total de itens consumidos: "<<Player.ItensConsumed<<"\n";
     cout<<"\n -> Total de perigos enfrentados: "<<Player.DangersFaced<<"\n";
     cout<<"\n -> Número total de passos: "<<Player.Steps<<"\n\n";
@@ -396,7 +344,8 @@ void ResumeOfJourney(PlayerStatus Player, short int Cycles)
 bool PlayerIsDead(PlayerStatus PlayerOne)
 {
     if(PlayerOne.Life==0)
-    {   
+    {    
+        cout<<"\n\n OS PERIGOS MATARAM O JOGADOR!\n\n";
         return true;
     }
 
@@ -410,6 +359,7 @@ bool PlayerOnRoundabout(PlayerStatus PlayerOne)
 {
     if(PlayerOne.WinCondition==false)
     {
+        cout<<"\n\n A ROTUNDA MATOU O JOGADOR! \n\n";
         return true;
     }
     
@@ -475,9 +425,6 @@ void FileUpdate(unsigned short int MatrixesReaded, Matrix MatrixChanges, string 
     
 
     //Se eu estou escrevendo na primeira linha eu escrevo
-    //fprintf(Outs ,"%d %d %d \n", MatrixChanges.n-1, MatrixChanges.n-1, MatrixChanges.matrices);
-
-    // ofstream Outs;
     FILE *Outs;
     if(*Rewritings == NumberOfMatrixes || *Rewritings==0)  
     {
@@ -518,12 +465,8 @@ void FileUpdate(unsigned short int MatrixesReaded, Matrix MatrixChanges, string 
         fprintf(Outs, "%c" ,'\n');
     }
     
-    
-    if(*counter>=1) cout<<"EU TENTEI ESCREVER 2 MATRIZES";
-
     fclose(Outs);
     *Rewritings+=1;
-
 }
 
 
@@ -539,31 +482,15 @@ void NullingSteps(SignedCoordinate *elements)
     }
 }
 
-bool SearchInSteps(Coordinate Position, SignedCoordinate *elements, short int MatrixesLocallyReaded)
-{
-    short int length = SizeRecon()*SizeRecon()*HowMuchMatrixes();
-    for(short int x;x<length;x++)
-    {
-        if((elements[x].i == Position.i) && (elements[x].j == Position.j) && (elements[x].MatrixOfPosition==MatrixesLocallyReaded)) return false;
-    }
-    return true;
-};
 
 void AddStep(SignedCoordinate *elements, Coordinate NowPosition, short int MatrixesLocallyReaded, short int *counter)
 {
-
-
-    
-    if(SearchInSteps(NowPosition, &*elements, MatrixesLocallyReaded))
-    {
-        elements[*counter].i = NowPosition.i;
-        elements[*counter].j = NowPosition.j;
-        elements[*counter].MatrixOfPosition = MatrixesLocallyReaded;
-        *counter+=1;
-    }
-    else
-        return;
+    elements[*counter].i = NowPosition.i;
+    elements[*counter].j = NowPosition.j;
+    elements[*counter].MatrixOfPosition = MatrixesLocallyReaded;
+    *counter+=1;
 }
+
 
 void Jogar(unsigned short int Size, unsigned short int NumOfMatrixes, unsigned short int *MatrixesReaded, bool *Over, PlayerStatus *PlayerOne, short int *Cycle, short int *CounterELements, SignedCoordinate *elements)
 {
@@ -590,8 +517,6 @@ void Jogar(unsigned short int Size, unsigned short int NumOfMatrixes, unsigned s
 
     //Abrindo o arquivo:
     ifstream File(Path);
-
-    //Tirar o cout e usar *
     
 
     // Percorrendo arquivo linha por linha e armazenando em Line:
@@ -612,24 +537,12 @@ void Jogar(unsigned short int Size, unsigned short int NumOfMatrixes, unsigned s
             //Ponto onde a leitura de uma matriz foi finalizada dentro do arquivo:
             if(MatrixLines==(Size-1))
             {    
-                // if(*MatrixesReaded==4)
-                // {
-                //     MatrixScanning(&MatrixLabyrinth);
-                //     exit(0);
-                // }
+              
                 *MatrixesReaded;
                 NowPosition = Spawn(Size,MatrixLabyrinth);
-                AddStep(&*elements, NowPosition, MatrixesLocallyReaded,&*CounterELements);
-
+                
                 Coordinate LastPosition;
-                
-
-                MatrixScanning(&MatrixLabyrinth);
-                // Consertar a soma
-
-                //Função de caminhamento vem aqui:
-                //MatrixScanning(&MatrixLabyrinth);                
-                
+                                
                 MatrixLines=0;
                 MatrixColumns=0;
 
@@ -653,16 +566,11 @@ void Jogar(unsigned short int Size, unsigned short int NumOfMatrixes, unsigned s
 
                     //Gerando o próximo passo:                
                     NowPosition = CoordinateDefinition(Size, NowPosition, N, NW, W, SW, S, E, SE, NE);
-                    AddStep(&*elements, NowPosition, MatrixesLocallyReaded,&*CounterELements);
-
-
-                    cout<<"\n\nHP:"<<PlayerOne->Life<<"  I'm on =>>=>>=>>"<<NowPosition.i<<"\t"<<NowPosition.j<<"\t"<<"Size:"<<Size<<"\t"<<"value:"<<MatrixLabyrinth.Labyrinth[MatrixLabyrinth.n * NowPosition.i + NowPosition.j].Region<<"\n";
 
                     //Verificando se o último passo é igual ao passo atual:
                     if(LastPosition.i == NowPosition.i && LastPosition.j == NowPosition.j)
                     {
                         cout<<"FIM DE JOGO ESTOU PRESO";
-                        cout<<MatrixLines<<MatrixColumns;
                         break;
                     }
 
@@ -674,14 +582,12 @@ void Jogar(unsigned short int Size, unsigned short int NumOfMatrixes, unsigned s
                     //Teste de derrota:
                     *Over = GameOver(*PlayerOne, &*Over, *MatrixesReaded);
 
-                    cout<<*Over;
                     
                     //Se perder:
                     if(*Over)
                     {
-                        PlayerOne->KnownCoordinates = *CounterELements;
+                        // KnownSteps(elements, *&PlayerOne, *CounterELements);
                         ResumeOfJourney(*PlayerOne, *Cycle);
-                        cout<<"SHUTOWUT";
                         unsigned short int counter=0;
                         return;
                     }
@@ -692,18 +598,16 @@ void Jogar(unsigned short int Size, unsigned short int NumOfMatrixes, unsigned s
                      
                         //Finalizar a matriz booleana
                             //Adicionar 1 das posições únicas ao contador de posições únicas do seu jogador
+                        
+
                         *Cycle+=1;
                         PlayerOne->TookA0Yet = false;
                         MatrixesLocallyReaded+=1;
                         unsigned short int counter=0;
                         FileUpdate(*MatrixesReaded ,MatrixLabyrinth, "./dataset/Output.data", &counter, &Rewrites, (Size-1), NumOfMatrixes);
-                        MatrixScanning(&MatrixLabyrinth);
-                        
                         break;
                         
                     }
-                    
-
                 }
             }
             
@@ -752,28 +656,27 @@ void Jogar(unsigned short int Size, unsigned short int NumOfMatrixes, unsigned s
     }
 
     *MatrixesReaded;
-    cout<<"qlqr coisa"<<endl;
-    MatrixScanning(&MatrixLabyrinth);
 
     
     if(MatrixesLocallyReaded==HowMuchMatrixes())
     {
-        cout<<"Atualizando tudo!";
         getline(File, Line);
-        cout<<"voltei pra ficar em: "<<Line<<"\n";
         File.close();
     }
 }
 
-
-
 void IniciaJogo()
 {
-    short int CounterElements = 0;
-    SignedCoordinate elements[(HowMuchMatrixes()*SizeRecon()*SizeRecon())];
-    NullingSteps(&*elements);
-    unsigned short int MatrixesReaded = 0;
     short int CycleOfRead = 0;
+    short int CounterElements = 0;
+
+    SignedCoordinate elements[(HowMuchMatrixes()*SizeRecon()*SizeRecon())];
+    
+    NullingSteps(&*elements);
+    
+    unsigned short int MatrixesReaded = 0;
+    short int p = 0;
+
     bool Over=false;
     PlayerStatus PlayerOne;
     RestartRoundabout(&*PlayerOne.Roundabout);
@@ -786,7 +689,3 @@ void IniciaJogo()
     }
 
 }
-
-//Abre o arquivo de saída 1º vez = APAGA A PORRA TODA:
-    //1ª Escrita
-        //V

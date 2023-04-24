@@ -42,7 +42,7 @@ Este repositório apresenta a solução implementada para um desafio da discipli
 
 - $a_{ij}$ - Elemento encontrado quando há deslocamento até a linha de índice $i$ e coluna de índice $j$.
 
-- $\text{\#}$ - **Parede**: Local onde não se pode passar dentro de uma matriz.
+- _Tralha ou jogo da velha_ - **Parede**: Local onde não se pode passar dentro de uma matriz.
 
 - $*$ - **Perigo**: Local onde ao se passar haverá descrescimento em 1 da variável vida.
 
@@ -70,7 +70,7 @@ Este repositório apresenta a solução implementada para um desafio da discipli
 ### Contextualizando o Algoritmo
 - Para contextualizar o funcionamento do algoritmo aqui foram escolhida Considere a existencia de um personagem muito ambicioso este viaja através de labirintos em busca de itens. Sua ambição é tamanha que viajará até coletar o máximo de itens escondidos pelo caminho possível. Para isso o ambicioso caminha sem parar até que uma das proposições à seguir sejam verdades.:
     -   O personagem inicia sua viajem com $10$ pontos de vida.
-    -   O caracter $\text{\#}$ representa uma casa por onde o ambicioso não consegue passar. Denomina-se o $\text{\#}$ como parede neste projeto.
+    -   A parede representa uma casa por onde o ambicioso não consegue passar.
     -   O caracter $*$ representa uma casa por onde caso o ambicioso passe, haverá descrescimento de um ponto de vida do mesmo. Denomina-se o $*$ como perigo.
     -   O personagem morre de pânico ao realizar uma viajem partindo de um ponto $a_{ij}$ e retornando ao mesmo com $a_{ij}$, sem que haja encontrado nenhum item em seu percurso sendo $a_{ij}$ uma casa de valor 0 quando considerada o primeiro passo do circuito.
     -   Cada casa tem um item de valor específico.
@@ -133,8 +133,8 @@ ____________________________________________
 
 - No caso da Figura 1, sendo A uma escolha de que a casa inicial seja $i=2$ e $j = 2$, as seguintes proposições são verdadeiras:
     - Casas onde $j=N$ não são posições válidas de inicialização.
-    - Casas com o caracter de valor $\#$ não são escolhas possíveis.
-    - Existem $5$ caracteres de valor $\#$ na matriz analizada.
+    - Casas com o caracter que representam uma parede não são escolhas possíveis.
+    - Existem $5$ caracteres que representam uma parede.
     - $n(U) = 15$
     - $n(A) = 1$.
     - $P(A) \approx 6,6666\%$
@@ -153,7 +153,7 @@ ____________________________________________
 <br>
 
 
-- Os movimentos devem ser realizados de maneira aleatória, seguindo uma probabilidade de escolha distribuída entre as casas azuis. Com isso seriam elementos possível para deslocamento os elementos contidos no conjunto $F$ para $F =  \text \{ a_{11}, a_{12}, a_{13}, a_{23}, a_{33}, a_{32}, a_{31}, a_{21} \}$. Portanto: 
+- Os movimentos devem ser realizados de maneira aleatória, seguindo uma probabilidade de escolha distribuída entre as casas azuis. Com isso seriam elementos possível para deslocamento os elementos contidos no conjunto $F$ para $F =  \text \{$ $a_{11}, a_{12}, a_{13}, a_{23}, a_{33}, a_{32}, a_{31}, a_{21}$ $\text \}$. Portanto: 
     - $P(a_{ij}) \approx 12,5\%$ tal que $a_{ij} \in F$
 
 
@@ -262,23 +262,21 @@ Existem alguns casos particulares onde teremos uma derrota causada por motivos d
 
 - Quando o jogador inicia uma trajetória que em algum momento passa pelo mesmo ponto onde ela começou sendo que este não capturou nenhum item, o jogo é perdido. Para computar essa derrota foram criadas as funções e estruturas de dados à seguir:
 
- - _**Roundabout**_: Roundabout ou Rotunda é um item no inventário do jogador, esse vetor passa a armazenar as coordenadas percorridas por um jogador à partir do momento que ele passa a viajar por casas de valor $0$, o item armazena uma coordenada por matriz e é esvaziado caso o jogador pegue um item tendo de ser preenchido de novo. Isso foi modelado de maneira ilustrativa por um vetor, este vetor tem como tamanho o número de matrizes contidas no arquivo `input.data`;
+    - _**Roundabout**_: Roundabout ou Rotunda é um item no inventário do jogador, esse vetor passa a armazenar as coordenadas percorridas por um jogador à partir do momento que ele passa a viajar por casas de valor $0$, o item armazena uma coordenada por matriz e é esvaziado caso o jogador pegue um item tendo de ser preenchido de novo. Isso foi modelado de maneira ilustrativa por um vetor, este vetor tem como tamanho o número de matrizes contidas no arquivo `input.data`;
 
- - _**UpdatingPlayerRoundabout**_: Função que atualiza os valores na Rotunda, preenchendo-a caso o jogador pegue um zero em uma matriz onde ele não pegou esse valor ainda, ou esvaziando-a caso o jogador pegue um item. Caso a rotunda esteja completamente preenchida o atributo _**WinCondition**_ do jogador se torna falso e ele é morto pela função _**GameOver**_.
+    - _**UpdatingPlayerRoundabout**_: Função que atualiza os valores na Rotunda, preenchendo-a caso o jogador pegue um zero em uma matriz onde ele não pegou esse valor ainda, ou esvaziando-a caso o jogador pegue um item. Caso a Rotunda esteja completamente preenchida o atributo _**WinCondition**_ do jogador se torna falso e ele é morto pela função _**GameOver**_.
 
- - _**MatrixNotOnRoundabout**_: Função que verifica se as coordenadas da matriz atual já foram armazenadas na rotunda, ou seja, se o jogador já pegou $0$ na matriz atual ou não.
+    - _**MatrixNotOnRoundabout**_: Função que verifica se as coordenadas da matriz atual já foram armazenadas na Rotunda, ou seja, se o jogador já pegou $0$ na matriz atual ou não.
 
- - _**RestartRoundabout**_: Função que esvazia a rotunda quando o jogador pega um item.
+    - _**RestartRoundabout**_: Função que esvazia a Rotunda quando o jogador pega um item.
 
- - Ao se considerar um caso com $K = 2$ com $N = 5$, onde em algum momento o trajeto sinalizado é realizado, tendo o ponto inicial na primeira matriz como $a_{20}$ e o ponto final como $a_{20}$ na primeira matriz, pode-se conceber um caso onde o jogador morre por preenchimento da rotrunda. Acompanhe o exemplo na imagem à seguir
-
-
+    - Ao se considerar um caso com $K = 2$ com $N = 5$, onde em algum momento o trajeto sinalizado é realizado, tendo o ponto inicial na primeira matriz como $a_{20}$ e o ponto final como $a_{20}$ na primeira matriz, pode-se conceber um caso onde o jogador morre por preenchimento da rotrunda. Acompanhe o exemplo na imagem à seguir:
 
 <div align="center">
 
 <strong>Figura 6</strong> - Casa inicial ou presente é igual casa final.    
 <br>
-<img src="./img/Imagem6.png" width="40%">
+<img src="./img/Imagem6.png" width="65%">
 <br>
 Fonte: Construção pelo autor⁶.
 <br>
@@ -287,79 +285,45 @@ ____________________________________________
 </div>
 <br>
 
-- Quando a posição atual como $a_{ij}$ tem seus valores de $i = N-1$ com  $j$ sendo qualquer valor, ou seja, quando a posição atual está na última linha da matriz. Nesse caso o único movimento possível é avançando em colunas, ou seja de forma que o próximo passo tenha o $i$ constante e o $j=j+1$ até que se chegue à última casa. Isso acontece pelo fato de que ao chegar à última linha realizar um movimento que não siga essas diretrizes resultará na impossibilidade de continuar caminhando sem ter chegado ao final da matriz.
+- Quando o jogador enfrenta perigos os suficientes para ficar sem pontos de vida ele também é derrotado. Vale ressaltar que a função _**GameOver**_ verifica essas condições de derrota à cada iteração realizada pelo algoritmo.
+    - _**GameOver**_: Função que faz um teste para avalizar se o jogador pode ser morto por preenchimento da Rotunda, ou se foi derrotado por perder todos os pontos de vida. Caso a derrota venha a ocorrer o relatório _**ResumeOfJourney**_ é chamado.
 
-<div align="center">
+    - _**ResumeOfJourney**_: Função que mostra tentativas de mensurar dados sobre a viajem do personagem. São essas informações: quantas casas foram percorridas ao todo, qual a soma dos itens consumidos pelo caminho, quantas casas da matriz ficaram sem serem exploradas, quantos perigos foram enfrentados ao decorrer do percurso.
 
-<strong>Figura 8</strong> - Casa inicial ou presente tem $i = N-1$    
-<br>
-<img src="./img/Imagem8.png" width="35%">
-<br>
-Fonte: Construção pelo autor⁸.
-<br>
-____________________________________________
-<br>⁸Criada usando o Google Sheets, Disponível em <a href="https://docs.google.com/spreadsheets/d/1nbK5ybx7Lwp98y11IScqkPUhSizV1jwG1KyGsdvTEjI/edit?usp=sharing">Planilha</a>.
-</div>
-<br>
-
-- Em casos de execução das funções: _**SouthWestPossibleWays**_, _**SouthEastPossibleWays**_ ou _**FivePossibleWays**_ onde os valores de duas ou mais casas adjascentes são iguais, haverá sempre preferência pelas casas adjascentes de maior valor na seguinte ordem:
-    
-    - 1º Escolha do elemento com $i = i+1$ e $j = j$, ou seja, elemento abaixo.
-    - 2º Escolha do elemento com $i = i+1$ e $j = j+1$, ou seja, elemento abaixo na diagonal direita.
-    - 3º Escolha do elemento com $i = i+1$ e $j = j$, ou seja, à direita.
-    - 4º Escolha do elemento com $i = i+1$ e $j = j-1$, ou seja, à direita.
-    
-<div align="center">
-
-<strong>Figura 9</strong> - Casas adjascentes à inical com valor igual    
-<br>
-<img src="./img/Imagem9.png" width="35%">
-<br>
-Fonte: Construção pelo autor⁹.
-<br>
-____________________________________________
-<br>⁹Criada usando o Google Sheets, Disponível em <a href="https://docs.google.com/spreadsheets/d/1nbK5ybx7Lwp98y11IScqkPUhSizV1jwG1KyGsdvTEjI/edit?usp=sharing">Planilha</a>.
-</div>
-<br>
 
 ## Implementação
-Em função de representar é realizado pelo algoritmo diante da entrada no arquivo <a href="dataset/input.data">`input.data`</a>, observe as imagens abaixo. Considere que nas saídas, números diferentes de 999 repersentam a ordem da caminhada realizada, sendo 999 uma forma de representar localizações fora do trajeto:
+Em função de representar o que é realizado pelo algoritmo diante da entrada específica em <a href="dataset/input.data">`input.data`</a>, observe as imagens abaixo.
 
 <div align="center">
 
-<strong>Figura 10</strong> - Entrada e saída de dados Matriz 1
+<strong>Figura 7</strong> - Entrada 1
 <br>
-<img src="./img/Entrada1.png" width="68%">
+<img src="./img/Imagem3.png" width="68%">
 <br>
 <br><br>
-<strong>Figura 11 - </strong>
-Saída de dados Matriz 1
+
+<strong>Figura 8 - </strong>
+Saída de dados Entrada 1
 <br>
-<img src="./img/Saída1.png" width="68%">
-<br>
-<br>
-<strong>Figura 12 - </strong>
-Entrada de dados Matriz 2
-<br>
-<img src="./img/Entrada2.png" width="68%">
+<img src="./img/Imagem8.png" width="68%">
 <br>
 <br>
-<strong>Figura 13 - </strong>
-Saída de dados Matriz 2
+
+<strong>Figura 9</strong> - Entrada de dados Matriz 2
 <br>
-<img src="./img/Saída2.png" width="68%">
+<img src="./img/Entrada 2.png" width="68%">
+<br>
+<br><br>
+<strong>Figura 10 - </strong>
+Saída de dados da Entrada 2
+<br>
+<img src="./img/Saida2.png" width="68%">
 <br>
 <br>
-<strong>Figura 14 - </strong>
-Saída de dados da Soma Global
-<br>
-<img src="./img/ResultadoGlobal.png" width="68%">
-<br>
-<br>
-Fonte: Captura de tela da compilação e execução realizada pelo autor ¹⁰.
+Fonte: Captura de tela da compilação e execução realizada na máquina do autor ⁷⁻¹⁰.
 <br>
 ____________________________________________
-<br>¹⁰Criada Pela Compilação do código fonte(ordem de entradas:  2 e 6, 2 e 2), Disponível em <a href="./src">Código Fonte</a>.
+<br>⁷⁻¹⁰Criada Pela Compilação do código fonte, Disponível em <a href="./src">Código Fonte</a>.
 </div>
 <br>
 
@@ -367,28 +331,45 @@ ____________________________________________
 
 ## Reflexões e Aprendizados
 
-### O que é um Algoritmo Guloso?
-"Um algoritmo guloso sempre faz a escolha que parece ser a melhor no momento em questão. 
-Isto é, faz uma escolha localmente ótima, na esperança de que essa escolha leve a uma solução globalmente ótima." 
+### Como melhorar o desenvolvimento de algoritmos?
+Diante do conhecimento proposto em salas aula após a construção do <a href ="https://github.com/jAzz-hub/Greedy_Algorithm/tree/main/src"> primeiro algoritmo guloso </a> a turma de Algoritmos e Estruturas de Dados 1 aprendeu sobre como calcular custo de suas aplicações. Dito isso foi proposto que houvesse a tentativa de realizar a modelagem de custo assintótico do algoritmo construído. Essa abordagem é importante, pois propõe questionamentos diante das melhores maneiras de se resolver um problema, ou seja, se há como melhorar o desenvolvimento de algorimtos. Portanto a resposta é testando outros algoritmos que tenham o mesmo propósito na mesmo ambiente de desenvolvimento e mensurando variáveis que interferem no quão "bom" pode ser o algoritmo resolvido, afinal "bom" é algo muito subjetivo.
+
+### Análise de Algoritmos Aleatorizados é o caso desse projeto?
+
+Percebendo a recorrência de fenômenos probabilisticos no comportamento do projeto desenvolvido, foi percebido pela turma que a análise poderia se fazer complexa o suficiente para estar fora do escopo de entrega do trabalho.
+
+Apesar da aplicação dos métodos de análise assintótica probabilística não serem o completo foco do trabalho, foi descoberto que são formas essênciais de se examinar o comportamento do programa desenvolvido.
+
+_"De modo geral dizemos que um algoritmo é **aleatorizado** se seu comportamento for determinado não apenas por sua entrada, mas também por valores produzidos por um **gerador de números aleatórios**"_(CORMEN, 2012, p.108).
+
+A citação acima prova que o caso desenvolvido se classifica como um algoritmo aleatorizado, afinal as entradas do código fonte são produzidas por um gerador de números aleatórios, denominei a função que gera números aleatórios contidos em um intervalo como _**RandomGenerator**_. À seguir também é importante considerar que:
+
+_"Quando analisamos o tempo de execução de um algoritmo aleatorizado, adotamos a expectativa do tempo de
+execução para a distribuição de valores retornada pelo gerador de números aleatórios. Distinguimos esses algoritmos
+daqueles, cuja entrada é aleatória referindo-nos ao tempo de execução de um algoritmo aleatorizado como um tempo
+de execução esperado. Em geral, discutimos o tempo de execução do caso médio quando a distribuição de
+probabilidade refere-se às entradas do algoritmo, e discutimos o **tempo de execução esperado** quando o próprio
+algoritmo faz escolhas aleatórias."_(CORMEN, 2012, p.108).
+
+Com isso Concluí-se que ao pensar na análise probabilistica não é apenas a modelagem de combinações ou probabilidades que influenciarão na análise assintótica, os próprios códigos escritos para gerar entradas aleatórias, ou seja, analisar o custo da função _**RandomGenerator**_ importa. É trivial mas válido pensar que para isso teríamos que analisar os custos das funções que são usadas dentro delas, algumas de difícil acesso à documentação.
+
 <br>
 <strong>Algoritmos: teoria e prática, de Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest e Clifford Stein, tradução da 3ª edição</strong>
 <div>
 
 ### Reavaliando a Implementação de um Algoritmo Guloso
-Com o intuito de preparar os alunos para a disciplina de Algoritmos e Estruturas de Dados dentro de um contexto onde os mesmos tivessem de ser avaliados em um período limitado de tempo, o desenvolvimento do desafio será avaliado diante da documentação e tentativa de construir um algoritmo guloso que resolvesse o problema apresentado.
+Foi implementado um algoritmo guloso simular as propostas de caminhamento por labiritntos, porém é válido ressaltar que uma abordagem à partir da modelagem computacional com <a href = "https://www.youtube.com/watch?v=k9DJn-COtKg">grafos</a> também poderia solucionar o problema. No entando se apegando ao que foi compreendido como recurso computacional até o momento e tentando aperfeiçoar o desenvolvimento de algoritmos gulosos, o projeto foi realizado desta forma.
 
-Contudo, é importante ressaltar que a implementação de algoritmos gulosos necessita de um estudo aprofundado em outros cenários antes de ser implementado.
+Considerando isso, são propostos por Cormen(2012) os Elementos da Estratégia Gulosa. Apesar das estratégias citadas serem ótimas formas de realizar o trabalho neste projeto a análise de casos onde é necessário saber todas as casas por onde se passou, bem como as casas por onde não se passou não foram desenvolvidas isso denota uma falha do autor na tentativa de implementação dos algoritmos gulosos. Para acessar as estratégias, clique no link abaixo:
 
-Considerando isso, são propostos por Cormen(2012) os Elementos da Estratégia Gulosa, ou seja, a projeção de algoritmos gulosos conta com a seguinte sequência de etapas:
-
-1. "Projetar o problema [...] como um problema no qual fazemos uma escolha e ficamos com um único subproblema para resolver"(CORMEN, 2012, p.354).<br><br>
-2. "Provar que sempre existe uma solução ótima para o problema original que usa a escolha gulosa, de modo que a escolha gulosa é sempre segura"(CORMEN, 2012, p.354)."<br><br>
-3. "Demonstrar subestrutura ótima, mostrando que, tendo feito a escolha gulosa, o que resta é o subproblema com a seguinte propriedade: se combinamos uma solução ótima para o subproblema com a escolha que fizemos, chegamos a uma solução ótima para o problema original"(CORMEN, 2012, p.354).<br><br>
+- <a href="https://github.com/jAzz-hub/Greedy_Algorithm#reavaliando-a-implementa%C3%A7%C3%A3o-de-um-algoritmo-guloso">Estratégias</a>
 
 
 <br>
 <br>
+
 ## Compilação e Execução
+
 Para compilação e execução do código é necessário que seja criado um arquivo Makefile. Para uso deste arquivo da forma correta, siga as diretrizes de execução abaixo:
 
 <table>
@@ -448,6 +429,10 @@ O código foi desenvolvido e testado no seguinte ambiente de desenvolvimento:
 [3] GNU make. Disponível em: <https://www.gnu.org/software/make/manual/make.html>. Acessado em 21 de Março de 2023.
 
 [4] GNU Make. Disponível em: <https://www.gnu.org/software/make/>. Acesso em: mar. 23DC.
+
+[5] Exemplo de probabilidade com combinações: escolha de grupos. Disponível em: <https://www.youtube.com/watch?v=Ajuz9xlxSZk>. Acesso em: 23 abr. 2023.
+
+[6] ALFREDO, A. et al. Grafos. [s.l: s.n.]. Disponível em: <https://homepages.dcc.ufmg.br/~loureiro/md/md_9Grafos.pdf>.
 
 ‌
 <div align="center">‌
