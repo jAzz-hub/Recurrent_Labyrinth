@@ -451,7 +451,7 @@ O código foi desenvolvido e testado no seguinte ambiente de desenvolvimento:
 <br>
 <br>
 
-<a style="color:black" href="mailto:michel@cefetmg.br?subject=[GitHub]%20Source%20Dynamic%20Lists">
+<a style="color:black" href="mailto:joaogu.2001@gmail.com?subject=[GitHub]%20Source%20Dynamic%20Lists">
 ✉️ <i>joaogu.2001@gmail.com</i>
 </a>
 
